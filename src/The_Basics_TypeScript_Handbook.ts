@@ -68,3 +68,7 @@ let string_one_two = 'something';
 console.log('string_one_two before changing: '+string_one_two)
 let uppercase_string_two= make_uppercase(string_one_two)// and this breaks because a string doesnt have the method flip
 console.log('string_one_two  after changing: '+uppercase_string_two)
+
+
+
+process.exit(0)// neat os._exit(0) equivalent

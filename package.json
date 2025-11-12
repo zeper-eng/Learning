@@ -13,21 +13,26 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/zeper-eng/pre_startdate_miniproject/issues"
   },
   "homepage": "https://github.com/zeper-eng/pre_startdate_miniproject#readme",
   "devDependencies": {
+    "@types/jsdom": "^27.0.0",
     "@types/node": "^24.10.1",
+    "@types/plotly.js": "^3.0.8",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@observablehq/plot": "^0.6.17",
     "@tensorflow/tfjs-node": "^4.22.0",
+    "jsdom": "^27.2.0",
     "nodejs-polars": "^0.23.0",
+    "plotly": "^1.0.6",
+    "plotly.js-dist": "^3.2.0",
+    "plotly.js-dist-min": "^3.2.0",
     "ts-node": "^10.9.2"
   }
-
 }
