@@ -52,8 +52,19 @@ Example output for the previous code
 */
 
 // lets say we wanted to define a simple function
-function fn(x) { // x implicitly has type 'any' (this is not ideal)
-  return x.flip();
+function make_uppercase(x: string) { // x implicitly has type 'any' (this is not ideal, i.e. the red underline) so we set it to string ourselves
+  return x.toUpperCase();
 }
 
-fn('something')// and this breaks because a string doesnt have the method flip
+//let is for when we might reassign variables, and also expands typing to string
+let string_one = 'something';
+console.log('string one before changing: '+string_one)
+let uppercase_string= make_uppercase(string_one)// and this breaks because a string doesnt have the method flip
+console.log('string one after changing: '+uppercase_string)
+
+
+//We can achieve the same thing with const if we know we wont reassign later, and also makes this a litteral assignment
+let string_one_two = 'something';
+console.log('string_one_two before changing: '+string_one_two)
+let uppercase_string_two= make_uppercase(string_one_two)// and this breaks because a string doesnt have the method flip
+console.log('string_one_two  after changing: '+uppercase_string_two)
