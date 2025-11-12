@@ -7,9 +7,18 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
-    "types": [],
+    "target": "ES2021",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+
+    //////////////////////////////////////
+    //old setting i changed
+    //"module": "nodenext",
+    //"target": "esnext",
+    //"types": [],
+    //////////////////////////////////////
+
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -33,12 +42,18 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
-    "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
+
   }
+ 
+
 }
+
