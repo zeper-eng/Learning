@@ -69,12 +69,14 @@ function xy(type: string) {
     y: t.getColumn("rate").toArray() as number[]
   };
 }
+
 const neon = xy("Neonatal");
 const infant = xy("Infant");
 const data = [
   { x: neon.x,   y: neon.y,   mode: "markers", type: "scatter", name: "Neonatal", marker:{color:"#1f77b4"} },
   { x: infant.x, y: infant.y, mode: "markers", type: "scatter", name: "Infant",   marker:{color:"#ff7f0e"} }
 ];
+
 // Emit a tiny HTML that loads Plotly from CDN
 // I guess this is easier than figuring out all the packages
 // Will learn some html as I go along for this?
@@ -102,7 +104,7 @@ const html =
 //kind of sick, the above code^^uses stringify to litteraly turn the columns into big arrays
 //i.e. <script>const data = [{ x: {"0":255,"1":255,"2":255,"3":255,...
 
-fs.writeFileSync("plot.html", html);
+fs.writeFileSync("plots/test_scatterplot.html", html);
 console.log("Open plot.html in your browser");
 
 
