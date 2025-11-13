@@ -3,6 +3,7 @@ import pl from "nodejs-polars";
 
 // Define the shape of the XY data
 export interface XYSeries {
+    //where the variable x(Year) is independent and rate(y) is dependent
   x: Array<number>;
   y: Array<number>;
   label?: string;
@@ -33,3 +34,4 @@ export const variance = (arr: number[]) => {
 
 export const std = (arr: number[]) =>
   Math.sqrt(variance(arr));//standard deviation is just sqrt of that
+
