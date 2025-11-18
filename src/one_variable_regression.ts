@@ -52,8 +52,8 @@ const data_object_Infant = xy("Infant",tidy)
 /*
 ALRIGHT
 
-So by defenition we can think of a linear regression as needing 4 basic assumptionss
-(which I will ignore for now in terms of my dataset and then add in normalization etc)
+So by definiton we can think of the data for a linear regression as meeting 4 basic assumptionss
+(We will ignore theese for now in terms of my dataset and then add in normalizations when appropriate etc)
 -homogenous variance across independent variable entries
 -normality (as do most things)
 -independence of observations (i.i.d)
@@ -149,7 +149,7 @@ function fit_regression(dataobject:XYSeries){
         
         let y:number = B0+(dataobject.x[i]*B1)//so calculate y
         predicted_points.push(y)//add to our actual predicted points 
-        errors.push(dataobject.y[i]-y)//calculate error and add to the list
+        errors.push(dataobject.y[i]-y)//calculate error and add to the list(residuals)
 
     }
 
@@ -178,8 +178,6 @@ const scatterInfant = {
   type: "scatter",
   name: "Infant",
 };
-
-
 
 
 const lineNeonatal = {

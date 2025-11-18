@@ -1,7 +1,7 @@
 import pl from "nodejs-polars"; 
 
 
-// Define the shape of the XY data
+// Define the shape of the XY data for use as a type for me
 export interface XYSeries {
     //where the variable x(Year) is independent and rate(y) is dependent
   x: Array<number>;
