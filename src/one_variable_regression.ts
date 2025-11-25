@@ -86,8 +86,11 @@ but, the analytical approach makes more sense to me in terms of then integrating
 
 */
 
+
 import {mean} from "./simple_utilities.ts";
+
 import type { XYSeries } from "./simple_utilities.ts";
+
 
 //I will define theese in here first and then throw them in the simple utilities stockpile
 function calculate_B1(dataobject:XYSeries){
@@ -129,12 +132,50 @@ function calculate_B0(dataobject:XYSeries,B1:number){
     return B0
 }
 
-const B1_data_object_Neonatal = calculate_B1(data_object_Neonatal)
-const B1_data_object_Infant = calculate_B1(data_object_Infant)
 
-const B0_data_object_Neonatal = calculate_B0(data_object_Neonatal,B1_data_object_Neonatal)
-const B0_data_object_Infant = calculate_B0(data_object_Infant,B1_data_object_Infant)
+function calculate_SSE(errors:number[]){
 
+  let running_sum:number=0
+  for(let i=0; i<errors.length; i++){
+    
+    let e:number=errors[i]
+    let e_squared=e*e
+    running_sum+=e_squared
+  }
+
+  return running_sum;
+
+}
+
+function calculate_SST(observations:number[]){
+
+  let running_sum:number=0
+  let y_mean:number = mean(observations)
+
+  for(let i=0; i<observations.length; i++){
+    let y_i:number=observations[i]
+    let squared_deviation:number = (y_i-y_mean)**2 
+    running_sum+=squared_deviation
+  }
+
+  return running_sum;
+
+}
+
+function calculate_SSR(predictions:number[],observations:number[]){
+
+  let running_sum:number=0
+  let y_mean:number = mean(observations)
+
+  for(let i=0; i<predictions.length; i++){
+    let y_hat:number=predictions[i]
+    let squared_deviation:number = (y_hat-y_mean)**2 
+    running_sum+=squared_deviation
+  }
+
+  return running_sum;
+
+}
 
 // I generated theese docs with chatgpt just so I can go ahead and see what the numpydoc style stuff looks like in typescript.
 function fit_regression(dataobject:XYSeries){
@@ -149,12 +190,17 @@ function fit_regression(dataobject:XYSeries){
         
         let y:number = B0+(dataobject.x[i]*B1)//so calculate y
         predicted_points.push(y)//add to our actual predicted points 
-        errors.push(dataobject.y[i]-y)//calculate error and add to the list(residuals)
-
+        errors.push(dataobject.y[i]-y)//calculate error and add to the list(residuals
     }
 
+    let SSR:number = calculate_SSR(predicted_points,dataobject.y)
+    let SST:number = calculate_SST(dataobject.y)
+    let SSE:number = calculate_SSE(errors)
 
-    return {predictions:predicted_points,erors:errors}
+    let r_squared:number=SSR/SST
+
+
+    return {predictions:predicted_points,errors:errors,SSR:SSR,SST:SST,SSE:SSE,r_squared}
 }
 
 const regression_Neonatal = fit_regression(data_object_Neonatal)
@@ -198,33 +244,46 @@ const lineInfant = {
 
 // Combine traces for main plot
 const data = [scatterNeonatal, scatterInfant, lineNeonatal, lineInfant];
+const annotations = [
+  {
+    text: `Neonatal: SSE=${regression_Neonatal.SSE.toFixed(2)}, SSR=${regression_Neonatal.SSR.toFixed(2)}, SST=${regression_Neonatal.SST.toFixed(2)}`,
+    xref: "paper",
+    yref: "paper",
+    x: 0.02,
+    y: 1.08,
+    showarrow: false,
+    font: { size: 12, color: "blue" },
+  },
+  {
+    text: `Infant: SSE=${regression_Infant.SSE.toFixed(2)}, SSR=${regression_Infant.SSR.toFixed(2)}, SST=${regression_Infant.SST.toFixed(2)}`,
+    xref: "paper",
+    yref: "paper",
+    x: 0.02,
+    y: 1.02,
+    showarrow: false,
+    font: { size: 12, color: "orange" },
+  },
+];
 
-// Emit a tiny HTML that loads Plotly from CDN
-// I guess this is easier than figuring out all the packages
-// Will learn some html as I go along for this?
+// Layout with annotation overlay
+const layout = {
+  xaxis: { title: "Year" },
+  yaxis: { title: "Mortality rate (per 1k)" },
+  annotations: annotations,
+};
 
-const html = 
-//use standard browser mode
-//default charachter encoding
-//placeholder DOM for plotly ot generate plot :: 
-//fetch plotly from cdn:: 
-//script is the actual inline script
-//also backticks here ``` allow us to do inline code similar to f"" 
-
-// In your HTML <script> (or injected HTML string)
-
-
-
-`<!doctype html>
+// Generate the HTML
+const html = `
+<!doctype html>
 <meta charset="utf-8">
 <div id="plot" style="width:900px;height:520px"></div>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <script>
-  Plotly.newPlot("plot", ${JSON.stringify(data)}, { xaxis:{title:"Year"}, yaxis:{title:"Mortality rate (per 1k)"} });
-</script>`;
-
-//kind of sick, the above code^^uses stringify to litteraly turn the columns into big arrays
-//i.e. <script>const data = [{ x: {"0":255,"1":255,"2":255,"3":255,...
+  const data = ${JSON.stringify(data)};
+  const layout = ${JSON.stringify(layout)};
+  Plotly.newPlot("plot", data, layout);
+</script>
+`;
 
 fs.writeFileSync("plots/test_scatterplot.html", html);
-console.log("Open plot.html in your browser");
+console.log("Open plots/test_scatterplot.html in your browser");
