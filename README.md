@@ -18,7 +18,7 @@ or
 (2): ![y = b0+B1X](https://latex.codecogs.com/svg.latex?y%20=%20b_0+b_1x) (for a univariate regression) 
 
 
-This implementation uses the linalg definition for ease of implementation, where X is our design matrix. A design matrix is a matrix where each row is one of our observations i and each column is one of our features k. Importantly the first column of the design matrix is all 1's so B0 our intercept is constant across observations (also the reason its different from a feature matrix).
+This implementation uses the linear algebra form for ease of implementation, where X is our design matrix. A design matrix is a matrix where each row is one of our observations i and each column is one of our features k. Importantly the first column of the design matrix is all 1's so B0 our intercept is constant across observations (also the reason it's different from a feature matrix).
 
 B is our coefficient vector which contains coefficients for each one of our predictors. Here
 the optimal predictors can be determined with the closed form solution
@@ -27,7 +27,7 @@ the optimal predictors can be determined with the closed form solution
 
 ##  Logistic Regression (Binary)
 
-Binary Logistic regression models the probability of an event happening as a linear combination of its predictors. Here the "event" is the probability of the response/target variable having the label it does, i.e. also the reason why we use this method for classification.
+Binary Logistic regression models the probability of an event happening as a linear combination of it's predictors. Here the "event" is the probability of the response/target variable having the label it does, i.e. also the reason why we use this method for classification.
 
 The equation for a logistic regression is as follows:
 
@@ -37,7 +37,7 @@ We would ideally want to maximize the probability of our particular outcomes occ
 
 (5): ![maximum likelihood](https://latex.codecogs.com/svg.latex?L(B)=\prod_{i=1}^{n}[\sigma(x_i^{T}B)]^{y_i}(1-\sigma(x_i^{T}B))^{1-y_i})
 
-However in practice, multiplying probabilities like that leads to very small numbers and numerical overflow so we typically take the negative log odds.
+However in practice, multiplying probabilities like that leads to very small numbers and numerical overflow so we typically take the negative log likelihood.
 
 (6): 
 
@@ -45,13 +45,13 @@ However in practice, multiplying probabilities like that leads to very small num
 
 or
 
-![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?\ell(B)=\sum_i\left[\log(1+e^{x_i^{T}B})-y_i\,x_i^{T}B\right]) (this form is the one I decided to implement)
+![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?\ell(B)=\sum_i\left[\log(1+e^{x_i^{T}B})-y_ix_i^{T}B\right]) (this form is the one I decided to implement)
 
 
 Because of the sigmoid function we do not automatically recieve an easy to use closed-form solution
 so we must use numerical methods to compute our ideal solution it.
 
-Fortunately the logistic regression function is typically convex and has 1 pretty easy to find global minima so I implemented using a simple T steps gradient descent(steepest descent) where our gradient 
+Fortunately the logistic regression function is typically convex and has 1 pretty easy to find global minima so I implemented a gradient descent(steepest descent) with T iterations, where our gradient 
 is defined as:
 
 ![gradient matrix form](https://latex.codecogs.com/svg.latex?\nabla_B\ell(B)=X^{T}(\sigma(XB)-Y))
@@ -66,9 +66,9 @@ and our update rule is:
 
 I plan on also adding in some kind of typescript front end GUI/chart displayer mostly to try to get some practice using javascript/typescript.
 
-There is actually already a univariate regression implemented in typescript before I realized that there werent very many good vectorized math packages in the nodejs version of typescript and its really not meant for that anyways but, it gave me a solid foundation thus far. 
+There is actually already a univariate regression implemented in typescript before I realized that there werent very many good vectorized math packages in the nodejs version of typescript and it's really not meant for that anyways but, it gave me a solid foundation thus far. 
 
-Pehaps some mysql stuff to pull in datasets although its hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
+Pehaps some mysql stuff to pull in datasets although it's hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
 
 ## Algorithms
 I plan on continuing implementing mostly GLM's for the purpose of growing my clinical research relevant skillset but, will also try out things like K-means and SVD PCA.
