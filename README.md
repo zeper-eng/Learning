@@ -1,9 +1,9 @@
 # Learning (Hand-rolled Machine learning and Statistical Analyses)
 
-Initially begun as a small project to learn some typescript and work out implementing some simple statistical analyses, it actually also functions as a nice proof of product for the derivations and
+Initially begun as a small project to learn some typescript and work out implementing some simple statistical analyses, it actually also functions as a nice log for the derivations and
 theorems I have been reading and doing in a notebook.
 
-Thus, I have decided to document this a little more thoroughly and use it as proof of product for my ability to do simple numerical computing.
+Thus, I have decided to document this a little more thoroughly and use it as proof of concept for my ability to do simple numerical computing.
 
 # Implementations so far
 Outline below are the different algorithms I have implemented so far. Mostly this is gonna be regressions and GLM's, bread and butter, and work out from there. More than likely add in simple non-parametric (unsupervised learning) things like K-means etc before moving on to more complex methods.
