@@ -1,4 +1,4 @@
-# Learning (Handrolled Machine learning and Statistical Analyses)
+# Learning (Hand-rolled Machine learning and Statistical Analyses)
 
 Initially begun as a small project to learn some typescript and work out implementing some simple statistical analyses, it actually also functions as a nice proof of product for the derivations and
 theorems I have been reading and doing in a notebook.
@@ -6,21 +6,19 @@ theorems I have been reading and doing in a notebook.
 Thus, I have decided to document this a little more thoroughly and use it as proof of product for my ability to do simple numerical computing.
 
 # Implementations so far
-Outline below are the different algorithms I have implemented so far. Mostly this is gonna be regressions and GLM's, bread and butter, and work out from there. More than likely add in simple things like K-means etc before moving on to more complex methods.
+Outline below are the different algorithms I have implemented so far. Mostly this is gonna be regressions and GLM's, bread and butter, and work out from there. More than likely add in simple non-parametric (unsupervised learning) things like K-means etc before moving on to more complex methods.
 
-##  Multiples Regression (univariate when 1 predictor is provided)
-I have implemented the closed form solution to linear regression 
+##  Multiple Regression (univariate when 1 predictor is provided)
+I have implemented a linear regression as a multiple regression which also functions as a simple(univariate) regression when 1 predictor is provided. In linear regression we model a dependent variable (our target/response variable) as a function of a (or multiple) predictor variable(s). 
 
-(1): ![y = BX](https://latex.codecogs.com/svg.latex?y%20=%20BX)
+(1): ![y = XB](https://latex.codecogs.com/svg.latex?y%20=%20XB)
 
 or
 
 (2): ![y = b0+B1X](https://latex.codecogs.com/svg.latex?y%20=%20b_0+b_1x) (for a univariate regression) 
 
-Here we model a dependent variable (our target/response variable) as a function of a (or multiple)predictor variable(s). 
 
-The implementation uses the linalg definition for ease of implementation, where X is our design matrix which is a matrix where each row is one of our observations i and each column is one of our features k. Importantly the first column of the design matrix is all 1's so B0 our intercept is constant across
-observations.
+This implementation uses the linalg definition for ease of implementation, where X is our design matrix. A design matrix is a matrix where each row is one of our observations i and each column is one of our features k. Importantly the first column of the design matrix is all 1's so B0 our intercept is constant across observations (also the reason its different from a feature matrix).
 
 B is our coefficient vector which contains coefficients for each one of our predictors. Here
 the optimal predictors can be determined with the closed form solution
@@ -53,7 +51,7 @@ or
 Because of the sigmoid function we do not automatically recieve an easy to use closed-form solution
 so we must use numerical methods to compute our ideal solution it.
 
-Fortunately logistic regression function is typically convex and has 1 pretty easy to find global minima so I implemented using a simple T steps gradient descent(steepest descent) where our gradient 
+Fortunately the logistic regression function is typically convex and has 1 pretty easy to find global minima so I implemented using a simple T steps gradient descent(steepest descent) where our gradient 
 is defined as:
 
 ![gradient matrix form](https://latex.codecogs.com/svg.latex?\nabla_B\ell(B)=X^{T}(\sigma(XB)-Y))
