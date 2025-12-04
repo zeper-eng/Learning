@@ -31,13 +31,13 @@ Binary Logistic regression models the probability of an event happening as a lin
 
 The equation for a logistic regression is as follows:
 
-(4): ![y=sigmoid(X^TB)](https://latex.codecogs.com/svg.latex?\{Y}=\sigma(X^{T}B))
+(4): ![y=sigmoid(X^TB)](https://latex.codecogs.com/svg.latex?\hat{Y}=\sigma(X^{T}B))
 
-We would ideally want to maximize the probability of our particular outcomes occuring. Because we are working with binary outcomes, we can assume a bernoulli distribution and therefore define our loss function as a maximum likelihood estimation where L(B): 
+Here y-hat is our predicted probabiliyt P(y=1|x). Ideally we would want to maximize the probability of our particular outcomes occurring (and therefore have the most accurate model). Fortunately, since we are working with binary outcomes, we can assume a bernoulli distribution and therefore, model our loss function as a maximum likelihood estimation where L(B): 
 
 (5): ![maximum likelihood](https://latex.codecogs.com/svg.latex?L(B)=\prod_{i=1}^{n}[\sigma(x_i^{T}B)]^{y_i}(1-\sigma(x_i^{T}B))^{1-y_i})
 
-However in practice, multiplying probabilities like that leads to very small numbers and numerical overflow so we typically take the negative log likelihood.
+However, in practice, multiplying probabilities like that leads to very small numbers and numerical overflow so we typically take the negative log likelihood.
 
 (6): 
 
@@ -48,10 +48,10 @@ or
 ![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?\ell(B)=\sum_i\left[\log(1+e^{x_i^{T}B})-y_ix_i^{T}B\right]) (this form is the one I decided to implement)
 
 
-Because of the sigmoid function we do not automatically recieve an easy to use closed-form solution
+Because of the sigmoid function we do not automatically receive an easy to use closed-form solution
 so we must use numerical methods to compute our ideal solution it.
 
-Fortunately the logistic regression function is typically convex and has 1 pretty easy to find global minima so I implemented a gradient descent(steepest descent) with T iterations, where our gradient 
+Fortunately the negative log-likelihood is convex in B and therefore has a unique global minimum, so I implemented a gradient descent(steepest descent) with T iterations, where our gradient 
 is defined as:
 
 ![gradient matrix form](https://latex.codecogs.com/svg.latex?\nabla_B\ell(B)=X^{T}(\sigma(XB)-Y))
@@ -71,11 +71,11 @@ There is actually already a univariate regression implemented in typescript befo
 Pehaps some mysql stuff to pull in datasets although it's hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
 
 ## Algorithms
-I plan on continuing implementing mostly GLM's for the purpose of growing my clinical research relevant skillset but, will also try out things like K-means and SVD PCA.
+I plan on continuing implementing mostly GLMs for the purpose of growing my clinical research relevant skillset but, will also try out things like K-means and SVD PCA.
 
 In the near future:
 
 - poisson regression
-- Kmeans 
+- k-means 
 - PCA
 
