@@ -350,17 +350,17 @@ class logistic_regression():
 
         return X 
     
-    def _initialize_target_vector(self,df=None):
-
+    def _initialize_target_vector(self,df=None,target_var=None):
+        target_var=target_var if target_var is not None else self.target_var
         df=df if df is not None else self.df
 
         '''grab target vector from dataframe'''
-        target_vector = np.array(df['target'])
-        self.target_vector=target_vector
+        target_vector = np.array(df[self.target_var])
+        self.targets=target_vector
 
         return target_vector
 
-    def initialize_coefficient_vector(self,):
+    def _initialize_coefficient_vector(self,):
         '''the idea here is that it will be dependent on what our input features are in scale'''
 
         return
@@ -369,7 +369,7 @@ class logistic_regression():
         '''internal helper function for sigmoid'''
         return 1 / (1 + np.exp(-x))
     
-    def _negative_log_likelihood(self,design_matrix=None,coefficient_vector=None,target_vector=None):
+    def negative_log_likelihood(self,design_matrix=None,coefficient_vector=None,target_vector=None):
         '''takes the negative log likelihood given an input coefficient vector and a design matrix
         
         Parameters
@@ -394,10 +394,10 @@ class logistic_regression():
         '''
 
         design_matrix=design_matrix if design_matrix is not None else self.create_design_matrix()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self.initialize_coefficient_vector()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
         target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
         logits=np.dot(design_matrix,coefficient_vector)
-        negative_log_likelihood=np.sum(np.logaddexp(0,logits)-(target_vector*logits))
+        negative_log_likelihood=np.sum(np.logaddexp(0,logits)-(target_vector*logits))#logaddexp factors out the Max val making this numerically stable by pulling that big number out front then multipluing it by the rest of the result
 
         return negative_log_likelihood
     
@@ -431,7 +431,7 @@ class logistic_regression():
         '''
 
         design_matrix = design_matrix if design_matrix is not None else self.create_design_matrix()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self.initialize_coefficient_vector()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
         
         #Theese are actually pretty neat prints for visualizing what were doing
         #print(design_matrix)
@@ -445,12 +445,55 @@ class logistic_regression():
 
     def calculate_gradient(self,design_matrix=None,target_vector=None,coefficient_vector=None):
         design_matrix=design_matrix if design_matrix is not None else self.create_design_matrix()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self.initialize_coefficient_vector()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
         target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
         
-        nabla_J = np.dot(design_matrix.T, ((self.sigmoid_squash())-target_vector))
+        logits = design_matrix @ coefficient_vector
+        y_hat = self._sigmoid(logits)               # shape (n_samples,)
+        nabla_J = design_matrix.T @ (y_hat - target_vector)  # shape (n_features,)
+        return nabla_J
+    
+    def gradient_descent_step(self,design_matrix=None,learning_rate=None,max_iterations=None,target_vector=None,coefficient_vector=None):
+        '''
+        Parameters
+        ----------
+        
 
-        return
+        
+
+        Returns
+        -------
+
+
+        
+        Notes
+        -----
+
+
+        
+        Examples
+        --------
+        '''
+        learning_rate = learning_rate if learning_rate is not None else .1
+        design_matrix = design_matrix if design_matrix is not None else self.create_design_matrix()
+        max_iterations = max_iterations if max_iterations is not None else 100
+        target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
+        
+        for i in range(max_iterations):
+
+            # Gradient of negative log-likelihood
+            gradient = self.calculate_gradient(design_matrix,target_vector,coefficient_vector)
+
+            # Parameter update
+            coefficient_vector_new = coefficient_vector - learning_rate * gradient
+            coefficient_vector = coefficient_vector_new
+        
+        final_nll = self.negative_log_likelihood(design_matrix,coefficient_vector,target_vector)
+
+        # Save and return the final coefficients
+        self.coefficient_vector = coefficient_vector
+        return coefficient_vector
     
 
 
@@ -480,7 +523,7 @@ if __name__=='__main__':
             10.96995493,          # petal length
             5.64537232            # petal width
         ]))
-        print(lr._negative_log_likelihood(coefficient_vector=np.array([
+        print(lr.negative_log_likelihood(coefficient_vector=np.array([
             -1.059330756723609,   # intercept
             -2.07245518,          # sepal length
             -6.90686719,          # sepal width
