@@ -27,7 +27,7 @@ the optimal predictors can be determined with the closed form solution
 
 (3): ![b-hat = (X^T X)^-1 X^T Y](https://latex.codecogs.com/svg.latex?\hat{b}=(X^{T}X)^{-1}X^{T}Y)
 
-##  Logistic Regression (univariate when 1 predictor is provided)
+##  Logistic Regression (Binary)
 
 Binary Logistic regression models the probability of an event happening as a linear combination of its predictors. Here the "event" is the probability of the response/target variable having the label it does, i.e. also the reason why we use this method for classification.
 
