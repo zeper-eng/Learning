@@ -64,7 +64,11 @@ and our update rule is:
 
 ## Front end
 
-Some kind of typescript front end GUI/chart displayer mostly to try to get some practice using javascript/typescript although its somewhat included in here and perhaps mysql stuff although its hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
+I plan on also adding in some kind of typescript front end GUI/chart displayer mostly to try to get some practice using javascript/typescript.
+
+There is actually already a univariate regression implemented in typescript before I realized that there werent very many good vectorized math packages in the nodejs version of typescript and its really not meant for that anyways but, it gave me a solid foundation thus far. 
+
+Pehaps some mysql stuff to pull in datasets although its hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
 
 ## Algorithms
 I plan on continuing implementing mostly GLM's for the purpose of growing my clinical research relevant skillset but, will also try out things like K-means and SVD PCA.
