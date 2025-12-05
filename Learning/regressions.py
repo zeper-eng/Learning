@@ -175,6 +175,12 @@ class Multiple_Regression():
 
         X_T = np.transpose(X)
 
+        #technically i think
+            #b_hat = np.linalg.solve(X_T @ X, X_T @ targets)
+        #Is more stable? but I like this implementation right now because its more conceptually visible and also
+        #I wont be running this on large datasets for quite a while but when i come back to it expect this comment to be flipped
+        #and mention the old method being used.
+        
         b_hat = np.dot(np.linalg.inv(np.dot(X_T, X)), np.dot(X_T, targets))
         self.b_hat=b_hat #store coefficients for use later
         
