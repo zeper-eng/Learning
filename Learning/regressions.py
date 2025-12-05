@@ -12,8 +12,8 @@ to pair a TypeScript/JavaScript dashboard front end with a Python backend for th
 core regression computations — since NumPy allows for rapid, transparent prototyping
 once the math is broken down.
 
-Also of note is that not all implementations are the most robust and well edge case gaurded ones yet,
-this will continously be updated with more thorough code and robust examples. At the moment various things
+Also of note is that not all implementations are the most robust and well edge case guarded ones yet,
+this will continuously be updated with more thorough code and robust examples. At the moment various things
 could already be improved like a non-normal equation implementation of linear regression and other optimization algorithm
 options for logistic regression.
 
@@ -31,13 +31,13 @@ class multiple_regression():
     So there are a few algebraic assumptions being made here namely being that:
         -Full column rank, i.e. no perfect colinearity (X^T*X is invertible) 
         -usually n>=p so full rank is possible
-        -ofcourse no NaNs/inf, nothing is numerically insane no massive or tiny values 
+        -of course no NaNs/inf, nothing is numerically insane no massive or tiny values 
     
-    This is ofcourse also in addition to the typical statistical assumptions for why regression works but in practice
-    theese are probably handled during expiremental design, etc.
+    This is of course also in addition to the typical statistical assumptions for why regression works but in practice
+    these are probably handled during experimental design, etc.
 
-    There are ofcourse more numerically stable and robust ways to perform this operation but, at the moment this is the one
-    I have choosen to go with and will expand from there into other methods.
+    There are of course more numerically stable and robust ways to perform this operation but, at the moment this is the one
+    I have chosen to go with and will expand from there into other methods.
 
 
     '''
@@ -89,7 +89,7 @@ class multiple_regression():
 
         return
 
-    def create_design_matrix(self,predictor_vars=None,df=None):
+    def Create_Design_Matrix(self,predictor_vars=None,df=None):
         '''creates a design matrix from a given dataframe and array of predictor variables
         
         Parameters
@@ -169,7 +169,7 @@ class multiple_regression():
 
         target_var=target_var if target_var is not None else self.target_var
         df=df if df is not None else self.df
-        X=X if X is not None else self.create_design_matrix()
+        X=X if X is not None else self.Create_Design_Matrix()
 
         targets = np.array(df[target_var])
 
@@ -182,7 +182,7 @@ class multiple_regression():
 
         return predictions,targets
 
-    def compute_SST(self, targets):
+    def Compute_SST(self, targets):
         '''Computes the Total Sum of Squares (SST)
 
         Parameters
@@ -308,7 +308,7 @@ class logistic_regression():
         self.df=df if df is not None else None
         self.b_hat=None
 
-        #theese are so they are explicitly declared before assignment
+        #these are so they are explicitly declared before assignment
         self.design_matrix=None
         self.targets=None
         self.predictions=None
@@ -317,7 +317,7 @@ class logistic_regression():
 
         return
     
-    def create_design_matrix(self,predictor_vars=None,df=None):
+    def Create_Design_Matrix(self,predictor_vars=None,df=None):
         '''creates a design matrix from a given dataframe and array of predictor variables
         
         Parameters
@@ -356,7 +356,7 @@ class logistic_regression():
 
         return X 
     
-    def _initialize_target_vector(self,df=None,target_var=None):
+    def _Initialize_Target_Vector(self,df=None,target_var=None):
         '''grab target vector from dataframe'''
         target_var=target_var if target_var is not None else self.target_var
         df=df if df is not None else self.df
@@ -368,25 +368,25 @@ class logistic_regression():
     
 
 
-    def _initialize_coefficient_vector(self,design_matrix=None):
+    def _Initialize_Coefficient_Vector(self,design_matrix=None):
         '''Initializes a coefficient vector with all 0's as a starting point from which to calculate gradient descent steps'''
-        design_matrix=design_matrix if design_matrix is not None else self.create_design_matrix()
+        design_matrix=design_matrix if design_matrix is not None else self.Create_Design_Matrix()
         B=np.zeros(shape=design_matrix.shape[1])
 
         return B
     
-    def _sigmoid(self,x):
+    def _Sigmoid(self,x):
         '''internal helper function for sigmoid'''
         return 1 / (1 + np.exp(-x))
     
-    def _initialize_attributes(self):
-        self.create_design_matrix()
-        self._initialize_target_vector()
-        self._initialize_target_vector()
+    def _Initialize_Attributes(self):
+        self.Create_Design_Matrix()
+        self._Initialize_Target_Vector()
+        self._Initialize_Coefficient_Vector()
 
         return
     
-    def negative_log_likelihood(self,design_matrix=None,coefficient_vector=None,target_vector=None):
+    def Negative_Log_Likelihood(self,design_matrix=None,coefficient_vector=None,target_vector=None):
         '''takes the negative log likelihood given an input coefficient vector and a design matrix
         
         Parameters
@@ -397,20 +397,20 @@ class logistic_regression():
         
         coefficient_vector=arraylike,shape=(n_coefficients,)
             This is our coefficient vector B where each entry 0-i-1 is a coefficient going in the order
-            B0,B1,B2,B3 etc. It is important that theese specific shapes are followed strictly as the rest
+            B0,B1,B2,B3 etc. It is important that these specific shapes are followed strictly as the rest
             of the linalg operations depend on it. For example our intercept is the first column in the design 
             matrix not the last, and contextually this may differ from implementation to implementation especially
             depending on what linalg operations are being done under the hood.
         
         target_vector:np.ndarray,shape=(n_samples)
             The column from the pandas DataFrame that contains your target variable (Y) in the form of a Numpy Array.
-            Expected dimensions are ofcourse equivalent to the rest of the samples i.               
+            Expected dimensions are of course equivalent to the rest of the samples i.               
         
 
         Returns
         -------
 
-        negative_log_likelihood:float,
+        Negative_Log_Likelihood:float,
             The current negative log likelihood as a function of the current set of coefficients (B/the coefficient vector).
             This is our current loss function.
 
@@ -426,15 +426,15 @@ class logistic_regression():
         
         '''
 
-        design_matrix=design_matrix if design_matrix is not None else self.create_design_matrix()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
-        target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
+        design_matrix=design_matrix if design_matrix is not None else self.Create_Design_Matrix()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._Initialize_Coefficient_Vector()
+        target_vector=target_vector if target_vector is not None else self._Initialize_Target_Vector()
         logits=np.dot(design_matrix,coefficient_vector)
-        negative_log_likelihood=np.sum(np.logaddexp(0,logits)-(target_vector*logits))#logaddexp factors out the Max val making this numerically stable by pulling that big number out front then multipluing it by the rest of the result
+        Negative_Log_Likelihood=np.sum(np.logaddexp(0,logits)-(target_vector*logits))#logaddexp factors out the Max val making this numerically stable by pulling that big number out front then multipluing it by the rest of the result
 
-        return negative_log_likelihood
+        return Negative_Log_Likelihood
     
-    def sigmoid_squash(self,design_matrix=None,coefficient_vector=None):
+    def Sigmoid_Squash(self,design_matrix=None,coefficient_vector=None):
         ''' A helper function to perform the operation σ(X​B)
 
         Parameters
@@ -443,7 +443,7 @@ class logistic_regression():
             Returns the design matrix (X) where the first column is filled with 1's such that our
             intercept remains consistent for now.
         
-        coefficient_vector:np.ndarray,shape=(n_observations)
+        coefficient_vector:np.ndarray,shape=(n_features,)
             A vector (or column vector) with the same number of coefficients as features in the design
             matrix for dot product computation
 
@@ -463,20 +463,20 @@ class logistic_regression():
         --------
         '''
 
-        design_matrix = design_matrix if design_matrix is not None else self.create_design_matrix()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
+        design_matrix = design_matrix if design_matrix is not None else self.Create_Design_Matrix()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._Initialize_Coefficient_Vector()
         
-        #Theese are actually pretty neat prints for visualizing what were doing
+        #these are actually pretty neat prints for visualizing what were doing
         #print(design_matrix)
         XT_B=np.dot(design_matrix,coefficient_vector) #also called logits 
         #print(XT_B)
-        sigmoid_XTB=self._sigmoid(XT_B)
+        sigmoid_XTB=self._Sigmoid(XT_B)
         
         #print(sigmoid_XTB.shape)
 
         return sigmoid_XTB
 
-    def calculate_gradient(self,design_matrix=None,target_vector=None,coefficient_vector=None):
+    def Calculate_Gradient(self,design_matrix=None,target_vector=None,coefficient_vector=None):
         '''
         Parameters
         ----------
@@ -484,13 +484,13 @@ class logistic_regression():
             Returns the design matrix (X) where the first column is filled with 1's such that our
             intercept remains consistent for now.
 
-        coefficient_vector:np.ndarray,shape=(n_observations)
+        coefficient_vector:np.ndarray,shape=(n_features,)
             A vector (or column vector) with the same number of coefficients as features in the design
             matrix for dot product computation
         
         target_vector:np.ndarray,shape=(n_samples)
             The column from the pandas DataFrame that contains your target variable (Y) in the form of a Numpy Array.
-            Expected dimensions are ofcourse equivalent to the rest of the samples i.
+            Expected dimensions are of course equivalent to the rest of the samples i.
         
         
         Returns
@@ -511,17 +511,17 @@ class logistic_regression():
 
 
         '''
-        design_matrix=design_matrix if design_matrix is not None else self.create_design_matrix()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
-        target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
+        design_matrix=design_matrix if design_matrix is not None else self.Create_Design_Matrix()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._Initialize_Coefficient_Vector()
+        target_vector=target_vector if target_vector is not None else self._Initialize_Target_Vector()
 
         logits = design_matrix @ coefficient_vector
-        y_hat = self._sigmoid(logits)               # shape (n_samples,)
+        y_hat = self._Sigmoid(logits)               # shape (n_samples,)
         nabla_J = design_matrix.T @ (y_hat - target_vector)  # shape (n_features,)
       
         return nabla_J
     
-    def minimize_coefficients(self,design_matrix=None,learning_rate=None,max_iterations=None,target_vector=None,coefficient_vector=None):
+    def Minimize_Coefficients(self,design_matrix=None,learning_rate=None,max_iterations=None,target_vector=None,coefficient_vector=None):
         '''
         Parameters
         ----------
@@ -529,13 +529,13 @@ class logistic_regression():
             Returns the design matrix (X) where the first column is filled with 1's such that our
             intercept remains consistent for now.
 
-        coefficient_vector:np.ndarray,shape=(n_observations)
+        coefficient_vector:np.ndarray,shape=(n_features,)
             A vector (or column vector) with the same number of coefficients as features in the design
             matrix for dot product computation
         
         target_vector:np.ndarray,shape=(n_samples)
             The column from the pandas DataFrame that contains your target variable (Y) in the form of a Numpy Array.
-            Expected dimensions are ofcourse equivalent to the rest of the samples i.
+            Expected dimensions are of course equivalent to the rest of the samples i.
         
         max_iterations:float,default=100
             The stopping condition for our gradient descent which will run (T) times where T is equivalent
@@ -566,26 +566,26 @@ class logistic_regression():
         --------
         '''
         learning_rate = learning_rate if learning_rate is not None else .1
-        design_matrix = design_matrix if design_matrix is not None else self.create_design_matrix()
+        design_matrix = design_matrix if design_matrix is not None else self.Create_Design_Matrix()
         max_iterations = max_iterations if max_iterations is not None else 100
-        target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
+        target_vector=target_vector if target_vector is not None else self._Initialize_Target_Vector()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._Initialize_Coefficient_Vector()
         
         for i in range(max_iterations):
 
             # Gradient of negative log-likelihood
-            gradient = self.calculate_gradient(design_matrix,target_vector,coefficient_vector)
+            gradient = self.Calculate_Gradient(design_matrix,target_vector,coefficient_vector)
 
             # Parameter update
             coefficient_vector_new = coefficient_vector - learning_rate * gradient
             coefficient_vector = coefficient_vector_new
         
-        final_nll = self.negative_log_likelihood(design_matrix,coefficient_vector,target_vector)
+        final_nll = self.Negative_Log_Likelihood(design_matrix,coefficient_vector,target_vector)
         # Save and return the final coefficients
         self.coefficient_vector = coefficient_vector
         return coefficient_vector,final_nll
     
-    def fit_logistic_regression(self,design_matrix=None,learning_rate=None,max_iterations=None,target_vector=None,coefficient_vector=None):
+    def Fit_Logistic_Regression(self,design_matrix=None,learning_rate=None,max_iterations=None,target_vector=None,coefficient_vector=None):
         '''
         Parameters
         ----------
@@ -593,13 +593,13 @@ class logistic_regression():
             Returns the design matrix (X) where the first column is filled with 1's such that our
             intercept remains consistent for now.
 
-        coefficient_vector:np.ndarray,shape=(n_observations)
+        coefficient_vector:np.ndarray,shape=(n_features,)
             A vector (or column vector) with the same number of coefficients as features in the design
             matrix for dot product computation
         
         target_vector:np.ndarray,shape=(n_samples)
             The column from the pandas DataFrame that contains your target variable (Y) in the form of a Numpy Array.
-            Expected dimensions are ofcourse equivalent to the rest of the samples i.
+            Expected dimensions are of course equivalent to the rest of the samples i.
         
         max_iterations:float,default=100
             The stopping condition for our gradient descent which will run (T) times where T is equivalent
@@ -632,121 +632,27 @@ class logistic_regression():
         '''
 
         learning_rate = learning_rate if learning_rate is not None else .1
-        design_matrix = design_matrix if design_matrix is not None else self.create_design_matrix()
+        design_matrix = design_matrix if design_matrix is not None else self.Create_Design_Matrix()
         max_iterations = max_iterations if max_iterations is not None else 100
-        target_vector=target_vector if target_vector is not None else self._initialize_target_vector()
-        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._initialize_coefficient_vector()
+        target_vector=target_vector if target_vector is not None else self._Initialize_Target_Vector()
+        coefficient_vector=coefficient_vector if coefficient_vector is not None else self._Initialize_Coefficient_Vector()
 
-        coefficient_vector,final_nll=self.minimize_coefficients(design_matrix,learning_rate,max_iterations,target_vector,coefficient_vector)
+        coefficient_vector,final_nll=self.Minimize_Coefficients(design_matrix,learning_rate,max_iterations,target_vector,coefficient_vector)
         
         print(f"The final negative log likelihood for this function was: {final_nll}")
         
-        y_hat_predictions = self.sigmoid_squash(design_matrix,coefficient_vector)
+        y_hat_predictions = self.Sigmoid_Squash(design_matrix,coefficient_vector)
         self.predictions=y_hat_predictions
 
         return y_hat_predictions
     
-    def compute_SST(self, targets):
-        '''Computes the Total Sum of Squares (SST)
-
-        Parameters
-        ----------
-        targets : arraylike, shape = (n_observations,)
-            The observed values of the target variable.
-
-        Returns
-        -------
-        SST : float
-            The total variance in `targets`, calculated as the sum of squared deviations 
-            from the mean.
-
-        Notes
-        -----
-        SST represents the total variation present in the dataset. In the context of 
-        regression, it can be decomposed into the explained (SSR) and unexplained (SSE) 
-        components such that:
-
-            SST = SSR + SSE
-        '''
-        predictions = predictions if predictions is not None else self.predictions
-        targets = targets if targets is not None else self.targets
-
-        y_bar = np.mean(targets)
-        deviations = (targets - y_bar) ** 2
-        SST = np.sum(deviations)
-        return SST
-
-    def compute_SSR(self, predictions, targets):
-        '''Computes the Regression Sum of Squares (SSR) 
-
-        Parameters
-        ----------
-        predictions : arraylike, shape = (n_observations,)
-            The model's predicted values of the target variable.
-
-        targets : arraylike, shape = (n_observations,)
-            The actual observed values of the target variable.
-
-        Returns
-        -------
-        SSR : float
-            The explained variance in `targets`, calculated as the sum of squared deviations 
-            of the predictions from the mean of the observed data.
-
-        Notes
-        -----
-        SSR measures how much variation the model explains compared to a simple model that 
-        only predicts the mean. In combination with SSE and SST, it satisfies:
-
-            SST = SSR + SSE
-        
-        '''
-        targets=targets if targets is not None else self.targets
-        predictions= predictions if predictions is not None else self.predictions
-                
-        y_bar = np.mean(targets)
-        deviations = (predictions - y_bar) ** 2
-        SSR = np.sum(deviations)
-        return SSR
-
-    def compute_SSE(self, predictions, targets):
-        '''Computes the Error Sum of Squares (SSE)
-
-        Parameters
-        ----------
-        predictions : arraylike, shape = (n_observations,)
-            The model's predicted values of the target variable.
-
-        targets : arraylike, shape = (n_observations,)
-            The actual observed values of the target variable.
-
-        Returns
-        -------
-        SSE : float
-            The unexplained variance in `targets`, calculated as the sum of squared residuals 
-            (differences between actual and predicted values).
-
-        Notes
-        -----
-        SSE quantifies model error — the variance remaining after accounting for the model’s 
-        predictions. Along with SSR, it forms part of the total variance decomposition:
-
-            SST = SSR + SSE
-        '''
-        
-        predictions=predictions if predictions is not None else self.predictions
-        targets=targets if targets is not None else self.targets
-
-        deviations = (targets - predictions) ** 2
-        SSE = np.sum(deviations)
-        return SSE
     
 
 
 
 
 if __name__=='__main__':
-    test='logistic'
+    test='linear'
 
     if test=='logistic':
         from sklearn.datasets import load_iris
@@ -759,26 +665,25 @@ if __name__=='__main__':
         iris_df = iris_df[(iris_df['target'] == 0) | (iris_df['target'] == 1)]
 
         lr=logistic_regression(df=iris_df,predictor_vars=iris.feature_names,target_var='target')
-        lr._initialize_attributes()
-        y_hat_predictions=lr.fit_logistic_regression()
-        print(y_hat_predictions.shape)
-        print(y_hat_predictions)
+        lr._Initialize_Attributes()
+        y_hat_predictions=lr.Fit_Logistic_Regression()
+
         
         
 
 
-        '''        from simple_viz import plot_regression
-                y = iris_df['target'].to_numpy()#just so theese tests work
-                y_hat = (filler_predictions >= 0.5).astype(int)
-                accuracy = (y_hat == y).mean()
-                print("Accuracy:", accuracy)
+        from simple_viz import plot_regression
+        y = iris_df['target'].to_numpy()#just so these tests work
+        y_hat = (y_hat_predictions >= 0.5).astype(int)
+        accuracy = (y_hat == y).mean()
+        print("Accuracy:", accuracy)
 
-                # 2. How extreme are the probabilities?
-                print("min pred:", filler_predictions.min())
-                print("max pred:", filler_predictions.max())
-                plot_regression(lr.target_vector,filler_predictions)
+        # 2. How extreme are the probabilities?
+        print("min pred:", y_hat_predictions.min())
+        print("max pred:", y_hat_predictions.max())
+        plot_regression(lr.targets,y_hat_predictions)
 
-        '''
+
 
 
     if test=='linear':
