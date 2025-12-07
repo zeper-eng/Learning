@@ -180,7 +180,7 @@ class Multiple_Regression():
         #Is more stable? but I like this implementation right now because its more conceptually visible and also
         #I wont be running this on large datasets for quite a while but when i come back to it expect this comment to be flipped
         #and mention the old method being used.
-        
+
         b_hat = np.dot(np.linalg.inv(np.dot(X_T, X)), np.dot(X_T, targets))
         self.b_hat=b_hat #store coefficients for use later
         
@@ -744,6 +744,7 @@ class Logistic_Regression():
 
         deviations = (targets - predictions) ** 2
         SSE = np.sum(deviations)
+        
         return SSE
     
 
@@ -751,7 +752,18 @@ class Logistic_Regression():
 
 
 if __name__=='__main__':
-    test='linear'
+    
+    import sys
+    
+    if len(sys.argv) >1:
+        test='typescript CLI connection'
+        print(f"tests has been identified as {test}")
+
+
+    elif len(sys.argv) <=1:
+        test='logistic'
+        print(f"tests has been identified as {test}")
+
 
     if test=='logistic':
         from sklearn.datasets import load_iris
@@ -763,12 +775,9 @@ if __name__=='__main__':
         iris_df['target'] = iris.target  # add target column
         iris_df = iris_df[(iris_df['target'] == 0) | (iris_df['target'] == 1)]
 
-        lr=logistic_regression(df=iris_df,predictor_vars=iris.feature_names,target_var='target')
+        lr=Logistic_Regression(df=iris_df,predictor_vars=iris.feature_names,target_var='target')
         lr._initialize_attributes()
         y_hat_predictions=lr.fit_logistic_regression()
-
-        
-        
 
 
         from simple_viz import plot_regression
@@ -792,7 +801,7 @@ if __name__=='__main__':
         mpg = mpg.dropna(subset=['weight', 'horsepower', 'displacement', 'mpg'])
 
         test_names = ['weight','horsepower','displacement']
-        mr_modeler = multiple_regression(df=mpg,predictor_vars=test_names,target_var='mpg')
+        mr_modeler = Multiple_Regression(df=mpg,predictor_vars=test_names,target_var='mpg')
         predictions, targets = mr_modeler.fit_regression()
         import matplotlib.pyplot as plt
 

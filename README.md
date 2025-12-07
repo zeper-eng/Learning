@@ -37,7 +37,7 @@ The equation for a logistic regression is as follows:
 
 (4): ![y=sigmoid(X^TB)](https://latex.codecogs.com/svg.latex?\hat{Y}=\sigma(X^{T}B))
 
-Here y-hat is our predicted probabiliyt P(y=1|x). Ideally we would want to maximize the probability of our particular outcomes occurring (and therefore have the most accurate model). Fortunately, since we are working with binary outcomes, we can assume a bernoulli distribution and therefore, model our loss function as a maximum likelihood estimation where L(B): 
+Here y-hat is our predicted probability P( y=1 | x). Ideally we would want to maximize the probability of our particular outcomes occurring (and therefore have the most accurate model). Fortunately, since we are working with binary outcomes, we can assume a bernoulli distribution and therefore, model our loss function as a maximum likelihood estimation where L(B): 
 
 (5): ![maximum likelihood](https://latex.codecogs.com/svg.latex?L(B)=\prod_{i=1}^{n}[\sigma(x_i^{T}B)]^{y_i}(1-\sigma(x_i^{T}B))^{1-y_i})
 
@@ -49,13 +49,13 @@ However, in practice, multiplying probabilities like that leads to very small nu
 
 or
 
-![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?\ell(B)=\sum_i\left[\log(1+e^{x_i^{T}B})-y_ix_i^{T}B\right]) (this form is the one I decided to implement)
+![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?J(B)=\sum_i\left[\log(1+e^{x_i^{T}B})-y_ix_i^{T}B\right]) (this form is the one I decided to implement)
 
 
 Because of the sigmoid function we do not automatically receive an easy to use closed-form solution
-so we must use numerical methods to compute our ideal solution it.
+so we must use numerical methods to compute our ideal solution.
 
-Fortunately the negative log-likelihood is convex in B and therefore has a unique global minimum, so I implemented a gradient descent(steepest descent) with T iterations, where our gradient 
+Fortunately the negative log-likelihood is convex in B and therefore has a unique global minimum, so I implemented gradient descent (steepest descent) with T iterations, where our gradient 
 is defined as:
 
 ![gradient matrix form](https://latex.codecogs.com/svg.latex?\nabla_B\ell(B)=X^{T}(\sigma(XB)-Y))
@@ -63,6 +63,8 @@ is defined as:
 and our update rule is:
 
 ![update rule](https://latex.codecogs.com/svg.latex?B^{(t+1)}=B^{(t)}-\alpha\nabla_B\ell(B^{(t)}))
+
+Currently this was tested on the mpg dataset found in scipy and the iris dataset inside of sklearn. Theese are pretty standard classroom datasets I used throughout undergrad so I thought it fitting to use them as the basis for testing functionality before a couple real-use cases.
 
 # Future directions
 
@@ -72,10 +74,10 @@ I plan on also adding in some kind of typescript front end GUI/chart displayer m
 
 There is actually already a univariate regression implemented in typescript before I realized that there werent very many good vectorized math packages in the nodejs version of typescript and it's really not meant for that anyways but, it gave me a solid foundation thus far. 
 
-Pehaps some mysql stuff to pull in datasets although it's hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
+Perhaps I will also add in some mysql stuff to pull in datasets although it's hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
 
 ## Algorithms
-I plan on continuing implementing mostly GLMs for the purpose of growing my clinical research relevant skillset but, will also try out things like K-means and SVD PCA.
+I plan on continuing implementing mostly GLMs for the purpose of growing my clinical research relevant skillset at the moment but, will also try out things like K-means and SVD-PCA as well as other generalizations.
 
 In the near future:
 

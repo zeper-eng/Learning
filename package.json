@@ -28,6 +28,8 @@
   "dependencies": {
     "@observablehq/plot": "^0.6.17",
     "@tensorflow/tfjs-node": "^4.22.0",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
     "jsdom": "^27.2.0",
     "ml-matrix": "^6.12.1",
     "ncu": "^0.2.1",
