@@ -49,43 +49,6 @@ const data_object_Infant = xy("Infant",tidy)
 //console.log("the Infant object:\n",data_object_Infant);
 
 
-/*
-ALRIGHT
-
-So by definiton we can think of the data for a linear regression as meeting 4 basic assumptionss
-(We will ignore theese for now in terms of my dataset and then add in normalizations when appropriate etc)
--homogenous variance across independent variable entries
--normality (as do most things)
--independence of observations (i.i.d)
--that the relationship between the independent and dependent variables is linear
-
-With theese assumptions met the simplest linear regression formula is as follows
-Y = B0 + B1X + e 
-
-where
-
--y is the predicted value of the dependent variable (y) for any given value of the independent variable (x).
--B0 is the intercept, the predicted value of y when the x is 0.
--B1 is the regression coefficient – how much we expect y to change as x increases.
--x is the independent variable ( the variable we expect is influencing y).
--e is the error of the estimate, or how much variation there is in our estimate of the regression coefficient.
-
-Linear regression finds the line of best through our data by searching for the regression coefficient (B1) that minimizes the total error (e) of the model.
-Where we are trying to minimize the sum of squares equation:
-
-SSE=i∑​(Yi​−(B0​+B1​Xi​))2
-
-In practice we know there are analytical derivations of the optimal solution which can be expressed as follows and
-so simplifies the process further:
-
-B1 = Σ[(X_i - X̄)(Y_i - Ȳ)] / Σ[(X_i - X̄)²]
-B0 = Ȳ - B1 * X̄
-
-I will add in some functions for estimating a small range of values anyways brute-force-esque just for proof of concept 
-but, the analytical approach makes more sense to me in terms of then integrating some SQL and stuff.
-
-*/
-
 
 import {mean} from "./simple_utilities.ts";
 
@@ -177,7 +140,6 @@ function calculate_SSR(predictions:number[],observations:number[]){
 
 }
 
-// I generated theese docs with chatgpt just so I can go ahead and see what the numpydoc style stuff looks like in typescript.
 function fit_regression(dataobject:XYSeries){
    
     let B1:number = calculate_B1(dataobject)
@@ -209,6 +171,7 @@ const regression_Infant = fit_regression(data_object_Infant)
 console.log("regression_Neonatal: ",regression_Neonatal)
 console.log("regression_Infant: ",regression_Infant)
 
+// here below needs some more exploration but scraped together an html injection
 const scatterNeonatal = {
   x: data_object_Neonatal.x,
   y: data_object_Neonatal.y,

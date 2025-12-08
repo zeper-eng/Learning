@@ -285,7 +285,7 @@ class Logistic_Regression():
 
     -squashing our linear function into probability space with a sigmoid function that maps our data between 0-1
     -optimizing the negative log likelihood as a function of our coefficients. This is our "loss function"
-    -Using gradient descent to progressively update the coefficient vectors with at a user defined learning rate alpha.
+    -Using gradient descent to progressively update the coefficient vectors with a user defined learning rate alpha.
 
     Other assumptions in terms of the shape of your data include
     -all categorical variables have been coded to be represented numerically
@@ -373,7 +373,6 @@ class Logistic_Regression():
         return target_vector
     
 
-
     def _initialize_coefficient_vector(self,design_matrix=None):
         '''Initializes a coefficient vector with all 0's as a starting point from which to calculate gradient descent steps'''
         design_matrix=design_matrix if design_matrix is not None else self.create_design_matrix()
@@ -386,6 +385,7 @@ class Logistic_Regression():
         return 1 / (1 + np.exp(-x))
     
     def _initialize_attributes(self):
+        '''helper for internally initializing all needed attributes'''
         self.create_design_matrix()
         self._initialize_target_vector()
         self._initialize_coefficient_vector()
