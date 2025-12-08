@@ -4,7 +4,7 @@ Initially begun as a small project to learn some typescript and work out impleme
 theorems I have been reading and doing in a notebook.
 
 Thus, I have decided to document this a little more thoroughly and use it as proof of concept for my excursions into numerical computing. While thin at the moment (and not the most robust in approaches)
-the idea is that this repository would continue to grow as I hand-implement more algo's and also make existing ones more robust (for example other optimization approaches, non-closed-form LR, etc).
+the idea is that this repository would continue to grow as I hand-implement more algorithms and also make existing ones more robust (for example other optimization approaches, non-closed-form LR, etc).
 
 The original typescript univariate implementation still exists inside of the original src directory
 but, they have been sidelined in favor of a Python backend and java/typescript front end for visualization and data loading.     
@@ -31,7 +31,7 @@ the optimal predictors can be determined with the closed form solution
 
 ##  Logistic Regression (Binary)
 
-Binary Logistic regression models the probability of an event happening as a linear combination of it's predictors. Here the "event" is the probability of the response/target variable having the label it does, i.e. also the reason why we use this method for classification.
+Binary Logistic regression models the probability of an event happening as a linear combination of its predictors. Here the "event" is the probability of the response/target variable having the label it does, i.e. also the reason why we use this method for classification.
 
 The equation for a logistic regression is as follows:
 
@@ -64,7 +64,7 @@ and our update rule is:
 
 ![update rule](https://latex.codecogs.com/svg.latex?B^{(t+1)}=B^{(t)}-\alpha\nabla_B\ell(B^{(t)}))
 
-Currently this was tested on the mpg dataset found in scipy and the iris dataset inside of sklearn. Theese are pretty standard classroom datasets I used throughout undergrad so I thought it fitting to use them as the basis for testing functionality before a couple real-use cases.
+Currently this was tested on the mpg dataset found in scipy and the iris dataset inside of sklearn. These are pretty standard classroom datasets I used throughout undergrad so I thought it fitting to use them as the basis for testing functionality before a couple real-use cases.
 
 # Future directions
 
@@ -72,7 +72,7 @@ Currently this was tested on the mpg dataset found in scipy and the iris dataset
 
 I plan on also adding in some kind of typescript front end GUI/chart displayer mostly to try to get some practice using javascript/typescript.
 
-There is actually already a univariate regression implemented in typescript before I realized that there werent very many good vectorized math packages in the nodejs version of typescript and it's really not meant for that anyways but, it gave me a solid foundation thus far. 
+There is actually already a univariate regression implemented in typescript before I realized that there weren’t many good vectorized math packages (aside from like ) in the nodejs version of typescript and it's really not meant for that anyways but, it gave me a solid foundation thus far. 
 
 Perhaps I will also add in some mysql stuff to pull in datasets although it's hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
 
