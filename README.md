@@ -9,8 +9,23 @@ the idea is that this repository would continue to grow as I hand-implement more
 The original typescript univariate implementation still exists inside of the original src directory
 but, they have been sidelined in favor of a Python backend and java/typescript front end for visualization and data loading.     
 
-# Implementations so far
+# Implementations so far and where the code lives
 Outline below are the different algorithms I have implemented so far. Mostly this is gonna be regressions and GLM's, bread and butter, and work out from there. More than likely add in other things like small unsupervised clustering algorithms like K-means or PCA and perhaps some supervised methods like decision trees, before moving on to more complex methods.
+
+The code itself for the current algos lives inside of 
+
+```bash
+Learning/Learning/
+```
+
+And the previous implementations of univariate regression as well as the front end that still need to be worked out live inside of
+
+```bash
+Learning/src/
+```
+
+There are examples at the bottom of each python module inside of the "___main___" block that can be run to test out
+each implementation if anyone perusing this file is curious to see. There are of-course unlisted dependencies (numpy/scipy/scikit-learn) but this is not really meant to be an entirely public use at the moment so for now I leave it up to the user to pip/conda install their way to success.
 
 ##  Multiple Regression (univariate when 1 predictor is provided)
 I have implemented linear regression as a multiple regression which also functions as a simple (univariate) regression when 1 predictor is provided. In linear regression we model a dependent variable (our target/response variable) as a function of a (or multiple) predictor variable(s). 
