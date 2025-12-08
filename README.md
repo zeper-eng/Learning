@@ -10,10 +10,10 @@ The original typescript univariate implementation still exists inside of the ori
 but, they have been sidelined in favor of a Python backend and java/typescript front end for visualization and data loading.     
 
 # Implementations so far
-Outline below are the different algorithms I have implemented so far. Mostly this is gonna be regressions and GLM's, bread and butter, and work out from there. More than likely add in other things like small unsupervised clustering algorithms like K-means or perhaps decision trees, before moving on to more complex methods.
+Outline below are the different algorithms I have implemented so far. Mostly this is gonna be regressions and GLM's, bread and butter, and work out from there. More than likely add in other things like small unsupervised clustering algorithms like K-means or PCA and perhaps some supervised methods like decision trees, before moving on to more complex methods.
 
 ##  Multiple Regression (univariate when 1 predictor is provided)
-I have implemented linear regression as a multiple regression which also functions as a simple(univariate) regression when 1 predictor is provided. In linear regression we model a dependent variable (our target/response variable) as a function of a (or multiple) predictor variable(s). 
+I have implemented linear regression as a multiple regression which also functions as a simple (univariate) regression when 1 predictor is provided. In linear regression we model a dependent variable (our target/response variable) as a function of a (or multiple) predictor variable(s). 
 
 (1): ![y = XB](https://latex.codecogs.com/svg.latex?y%20=%20XB)
 
