@@ -87,7 +87,7 @@ Currently this was tested on the mpg dataset found in scipy and the iris dataset
 
 I plan on also adding in some kind of typescript front end GUI/chart displayer mostly to try to get some practice using javascript/typescript.
 
-There is actually already a univariate regression implemented in typescript before I realized that there weren’t many good vectorized math packages (aside from like ) in the nodejs version of typescript and it's really not meant for that anyways but, it gave me a solid foundation thus far. 
+There is actually already a univariate regression implemented in typescript before I realized that there weren’t many good vectorized math packages (aside from like tensorflow but this came with its own suite of problems) in the nodejs version of typescript and it's really not meant for that anyways but, it gave me a solid foundation thus far. 
 
 Perhaps I will also add in some mysql stuff to pull in datasets although it's hard to really implement SQL without using a proper database connection via stuff like microsoft azure.
 
