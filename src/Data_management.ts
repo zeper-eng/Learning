@@ -88,7 +88,6 @@ const html =
 //fetch plotly from cdn:: 
 //script is the actual inline script
 //also backticks here ``` allow us to do inline code similar to f"" 
-
 // In your HTML <script> (or injected HTML string)
 
 
