@@ -54,7 +54,7 @@ The equation for a logistic regression is as follows:
 
 Here y-hat is our predicted probability P( y=1 | x). Ideally we would want to maximize the probability of our particular outcomes occurring (and therefore have the most accurate model). Fortunately, since we are working with binary outcomes, we can assume a bernoulli distribution and therefore, model our loss function as a maximum likelihood estimation where L(B): 
 
-(5): ![maximum likelihood](https://latex.codecogs.com/svg.latex?L(B)=\prod_{i=1}^{n}[\sigma(x_i^{T}B)]^{y_i}(1-\sigma(x_i^{T}B))^{1-y_i})
+(5): ![maximum likelihood](https://latex.codecogs.com/svg.latex?L(B)=\prod_{i=1}^{n}(\sigma(x_i^{T}B))^{y_i}(1-\sigma(x_i^{T}B))^{1-y_i})
 
 However, in practice, multiplying probabilities like that leads to very small numbers and numerical overflow so we typically take the negative log likelihood.
 
