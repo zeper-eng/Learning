@@ -651,103 +651,6 @@ class Logistic_Regression():
         self.predictions=y_hat_predictions
 
         return y_hat_predictions
-    
-    def compute_SST(self, targets=None):
-        '''Computes the Total Sum of Squares (SST)
-
-        Parameters
-        ----------
-        targets : arraylike, shape = (n_observations,)
-            The observed values of the target variable.
-
-        Returns
-        -------
-        SST : float
-            The total variance in `targets`, calculated as the sum of squared deviations 
-            from the mean.
-
-        Notes
-        -----
-        SST represents the total variation present in the dataset. In the context of 
-        regression, it can be decomposed into the explained (SSR) and unexplained (SSE) 
-        components such that:
-
-            SST = SSR + SSE
-        '''
-        targets = targets if targets is not None else self.targets
-
-        y_bar = np.mean(targets)
-        deviations = (targets - y_bar) ** 2
-        SST = np.sum(deviations)
-        return SST
-
-    def compute_SSR(self, predictions=None, targets=None):
-        '''Computes the Regression Sum of Squares (SSR) 
-
-        Parameters
-        ----------
-        predictions : arraylike, shape = (n_observations,)
-            The model's predicted values of the target variable.
-
-        targets : arraylike, shape = (n_observations,)
-            The actual observed values of the target variable.
-
-        Returns
-        -------
-        SSR : float
-            The explained variance in `targets`, calculated as the sum of squared deviations 
-            of the predictions from the mean of the observed data.
-
-        Notes
-        -----
-        SSR measures how much variation the model explains compared to a simple model that 
-        only predicts the mean. In combination with SSE and SST, it satisfies:
-
-            SST = SSR + SSE
-        
-        '''
-        targets=targets if targets is not None else self.targets
-        predictions= predictions if predictions is not None else self.predictions
-                
-        y_bar = np.mean(targets)
-        deviations = (predictions - y_bar) ** 2
-        SSR = np.sum(deviations)
-        return SSR
-
-    def compute_SSE(self, predictions, targets):
-        '''Computes the Error Sum of Squares (SSE)
-
-        Parameters
-        ----------
-        predictions : arraylike, shape = (n_observations,)
-            The model's predicted values of the target variable.
-
-        targets : arraylike, shape = (n_observations,)
-            The actual observed values of the target variable.
-
-        Returns
-        -------
-        SSE : float
-            The unexplained variance in `targets`, calculated as the sum of squared residuals 
-            (differences between actual and predicted values).
-
-        Notes
-        -----
-        SSE quantifies model error — the variance remaining after accounting for the model’s 
-        predictions. Along with SSR, it forms part of the total variance decomposition:
-
-            SST = SSR + SSE
-        '''
-        
-        predictions=predictions if predictions is not None else self.predictions
-        targets=targets if targets is not None else self.targets
-
-        deviations = (targets - predictions) ** 2
-        SSE = np.sum(deviations)
-        
-        return SSE
-    
-
 
 
 
@@ -757,39 +660,36 @@ if __name__=='__main__':
     
     if len(sys.argv) >1:
         test='typescript CLI connection'
-        print(f"tests has been identified as {test}")
+        print(f"tests has been identified as {test}\n")
 
 
     elif len(sys.argv) <=1:
         test='logistic'
-        print(f"tests has been identified as {test}")
+        print(f"tests has been identified as {test}\n")
 
 
     if test=='logistic':
         from sklearn.datasets import load_iris
 
-        iris = load_iris()        # load the dataset
+        iris = load_iris()        # load dataset
         y = iris.target 
-        X = np.hstack((np.ones((y.shape[0],1)),iris.data))
         iris_df = pd.DataFrame(iris.data, columns=iris.feature_names)
         iris_df['target'] = iris.target  # add target column
-        iris_df = iris_df[(iris_df['target'] == 0) | (iris_df['target'] == 1)]
+        iris_df = iris_df[(iris_df['target'] == 0) | (iris_df['target'] == 1)] # grab just two possibiliites for binary lr
+        
+        #70/30 train test split
+        test  = iris_df.iloc[:70, :]   
+        train = iris_df.iloc[70:, :] 
 
-        lr=Logistic_Regression(df=iris_df,predictor_vars=iris.feature_names,target_var='target')
+        print(f"\nconfirming train test split\n test:{test.shape}, train:{test.shape}")
+
+
+        lr=Logistic_Regression(df=train,predictor_vars=iris.feature_names,target_var='target')
         lr._initialize_attributes()
-        y_hat_predictions=lr.fit_logistic_regression()
+        y_hat_probabilities=lr.fit_logistic_regression()
 
-
-        from simple_viz import plot_regression
-        y = iris_df['target'].to_numpy()#just so these tests work
-        y_hat = (y_hat_predictions >= 0.5).astype(int)
-        accuracy = (y_hat == y).mean()
-        print("Accuracy:", accuracy)
-
-        # 2. How extreme are the probabilities?
-        print("min pred:", y_hat_predictions.min())
-        print("max pred:", y_hat_predictions.max())
-        plot_regression(lr.targets,y_hat_predictions)
+        lr.sigmoid_squash()
+        
 
 
 
