@@ -64,7 +64,7 @@ However, in practice, multiplying probabilities like that leads to very small nu
 
 or
 
-![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?J(B)=\sum_{i=1}^{n}\left[\ln(1+e^{x_i^{T}B})-y_ix_i^{T}B\right]) (this form is the one I decided to implement)
+![negative log-likelihood sum-exp form](https://latex.codecogs.com/svg.latex?J(B)=\sum_{i=1}^{n}\left[\ln(1+e^{x_i^{T}B})-y_ix_i^{T}B\right]) (this form is the one I decided to implement, but is equivalent just re-organized)
 
 
 Because of the sigmoid function we do not automatically receive an easy to use closed-form solution
